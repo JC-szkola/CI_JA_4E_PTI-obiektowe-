@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Główna strona aplikacji NotatkiMobilne.
+    x:Class wiąże ten plik XAML z klasą partial "MainPage" zdefiniowaną w MainPage.xaml.cs.
+-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotatkiMobilne.MainPage">
+
+    <!-- Główny układ PIONOWY (wymóg zadania: layout pionowy jako kontener nadrzędny). 
+         Spacing dodaje odstępy między elementami, Padding - margines wokół całości. -->
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <!-- Tytuł aplikacji -->
+        <Label Text="Moje notatki"
+               FontSize="28"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Układ POZIOMY zagnieżdżony w pionowym (wymóg zadania: pole + przycisk obok siebie) -->
+        <HorizontalStackLayout Spacing="10">
+
+            <!-- Pole edycyjne na nową notatkę. x:Name pozwala odwołać się do niego w kodzie C#
+                 (NoteEntry.Text) w pliku MainPage.xaml.cs -->
+            <Entry x:Name="NoteEntry"
+                   Placeholder="Nowy element"
+                   WidthRequest="220" />
+
+            <!-- Przycisk dodawania. Clicked wskazuje metodę obsługi zdarzenia w code-behind:
+                 OnAddButtonClicked w MainPage.xaml.cs. Kolory zgodne z wymogiem zadania. -->
+            <Button x:Name="AddButton"
+                    Text="DODAJ"
+                    BackgroundColor="Crimson"
+                    TextColor="White"
+                    Clicked="OnAddButtonClicked" />
+
+        </HorizontalStackLayout>
+
+        <!-- Lista notatek. ItemsSource="{Binding Notes}" oznacza, że lista wyświetla
+             zawartość właściwości "Notes" z BindingContext (ustawionego w kodzie C# na "this",
+             czyli samą stronę MainPage - stąd widoczność właściwości Notes).
+             Ponieważ Notes to ObservableCollection<string>, lista sama się odświeża
+             po dodaniu elementu - nie trzeba ręcznie wywoływać żadnej metody odświeżania. -->
+        <CollectionView x:Name="NotesListView"
+                        ItemsSource="{Binding Notes}"
+                        HeightRequest="400">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- "{Binding .}" oznacza "powiąż z samym elementem" - tutaj każdy
+                         element kolekcji to zwykły string, więc wyświetlamy go wprost. -->
+                    <Label Text="{Binding .}"
+                           Padding="5"
+                           FontSize="16" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+
+</ContentPage>

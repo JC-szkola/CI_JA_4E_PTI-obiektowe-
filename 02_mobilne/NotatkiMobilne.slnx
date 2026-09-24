@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="NotatkiMobilne/NotatkiMobilne.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
